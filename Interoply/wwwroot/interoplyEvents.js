@@ -3,6 +3,7 @@
         dotNetRef.invokeMethodAsync("RaiseResize", window.innerWidth);
     };
     window.addEventListener("resize", onResize);
+    onResize();
 }
 
 export function registerScroll(dotNetRef) {
