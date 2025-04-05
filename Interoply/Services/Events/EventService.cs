@@ -49,7 +49,7 @@ namespace Interoply.Services.Events
         [JSInvokable]
         public async Task RaiseScroll(double scrollY)
         {
-            if (this.interoplyEvent.OnResizeCallback != null)
+            if (this.interoplyEvent.OnScrollCallback != null)
                 await this.interoplyEvent.OnScrollCallback(scrollY);
         }
 
