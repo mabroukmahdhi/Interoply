@@ -46,6 +46,23 @@ namespace Interoply.Tests.Unit.Services.Events
         }
 
         [Fact]
+        public async Task ShouldInvokeRegisterScrollForOnVisibilityChangeAsync()
+        {
+            // given .. when
+            await this.eventService.OnVisibilityChangeAsync(scroll =>
+            {
+                return ValueTask.CompletedTask;
+            });
+
+            // then
+            var invocation = this.JSInterop.VerifyInvoke("visibilitychange");
+            invocation.Arguments.Should().HaveCount(1);
+
+            invocation.Arguments[0].Should()
+                .BeOfType<DotNetObjectReference<EventService>>();
+        }
+
+        [Fact]
         public async Task ShouldInvokeResizeCallbackWhenTriggeredByInterop()
         {
             // given
@@ -93,5 +110,29 @@ namespace Interoply.Tests.Unit.Services.Events
             receivedScrollY.Should().Be(expectedScrollY);
         }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task ShouldInvokeVisibilityChangeCallbackWhenTriggeredByInterop(bool inputScrollY)
+        {
+            // given
+            bool receivedVisibility = false;
+            bool expectedScrollY = inputScrollY;
+
+            await this.eventService.OnVisibilityChangeAsync(visible =>
+            {
+                receivedVisibility = visible;
+                return ValueTask.CompletedTask;
+            });
+
+            // when
+            var raiseScrollMethod =
+                typeof(EventService).GetMethod("RaiseVisibilityChange")!;
+
+            raiseScrollMethod.Invoke(this.eventService, [inputScrollY]);
+
+            // then
+            receivedVisibility.Should().Be(expectedScrollY);
+        }
     }
 }

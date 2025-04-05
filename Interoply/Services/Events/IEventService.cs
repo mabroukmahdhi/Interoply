@@ -11,5 +11,7 @@ namespace Interoply.Services.Events
     {
         ValueTask OnResizeAsync(Func<int, ValueTask> callback);
         ValueTask OnScrollAsync(Func<double, ValueTask> callback);
+        ValueTask OnVisibilityChangeAsync(Func<bool, ValueTask> callback);
+        ValueTask OnOnlineStatusChangeAsync(Func<bool, ValueTask> callback);
     }
 }

@@ -11,5 +11,8 @@ namespace Interoply.Models.Events
     {
         public Func<int, ValueTask> OnResizeCallback { get; internal set; }
         public Func<double, ValueTask> OnScrollCallback { get; internal set; }
+        public Func<bool, ValueTask> OnVisibilityChangeCallback { get; internal set; }
+        public Func<bool, ValueTask> OnOnlineStatusChangeCallback { get; internal set; }
+        public Func<bool, ValueTask> OnBeforeUnloadCallback { get; internal set; }
     }
 }
