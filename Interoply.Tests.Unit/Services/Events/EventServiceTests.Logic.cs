@@ -69,5 +69,29 @@ namespace Interoply.Tests.Unit.Services.Events
             receivedWidth.Should().Be(expectedWidth);
         }
 
+        [Fact]
+        public async Task ShouldInvokeScrollCallbackWhenTriggeredByInterop()
+        {
+            // given
+            double receivedScrollY = 0;
+            double inputScrollY = 140.5;
+            double expectedScrollY = 140.5;
+
+            await this.eventService.OnScrollAsync(scrollY =>
+            {
+                receivedScrollY = scrollY;
+                return ValueTask.CompletedTask;
+            });
+
+            // when
+            var raiseScrollMethod =
+                typeof(EventService).GetMethod("RaiseScroll")!;
+
+            raiseScrollMethod.Invoke(this.eventService, [inputScrollY]);
+
+            // then
+            receivedScrollY.Should().Be(expectedScrollY);
+        }
+
     }
 }
