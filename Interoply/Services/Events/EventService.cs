@@ -11,7 +11,7 @@ namespace Interoply.Services.Events
 {
     internal class EventService : IEventService, IAsyncDisposable
     {
-        private DotNetObjectReference<EventService> dotNetRef;
+        private readonly DotNetObjectReference<EventService> dotNetRef;
         private readonly InteroplyEvent interoplyEvent;
         private readonly Lazy<Task<IJSObjectReference>> moduleTask;
 
@@ -21,13 +21,14 @@ namespace Interoply.Services.Events
 
             this.moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
                 "import", "./_content/Interoply/interoplyEvents.js").AsTask());
+
+            this.dotNetRef = DotNetObjectReference.Create(this);
         }
 
         public async ValueTask OnResizeAsync(Func<int, ValueTask> callback)
         {
             var module = await moduleTask.Value;
             this.interoplyEvent.OnResizeCallback = callback;
-            this.dotNetRef ??= DotNetObjectReference.Create(this);
             await module.InvokeVoidAsync("registerResize", dotNetRef);
         }
 
@@ -35,7 +36,6 @@ namespace Interoply.Services.Events
         {
             var module = await moduleTask.Value;
             this.interoplyEvent.OnScrollCallback = callback;
-            this.dotNetRef ??= DotNetObjectReference.Create(this);
             await module.InvokeVoidAsync("registerScroll", dotNetRef);
         }
 

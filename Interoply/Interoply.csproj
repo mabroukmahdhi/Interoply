@@ -22,4 +22,8 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.20" />
 	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="Interoply.Tests.Unit" />
+	</ItemGroup>
 </Project>
