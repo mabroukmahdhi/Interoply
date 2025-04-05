@@ -116,7 +116,7 @@ namespace Interoply.Tests.Unit.Services.Events
         public async Task ShouldInvokeVisibilityChangeCallbackWhenTriggeredByInterop(bool inputScrollY)
         {
             // given
-            bool receivedVisibility = false; 
+            bool receivedVisibility = false;
             bool expectedScrollY = inputScrollY;
 
             await this.eventService.OnVisibilityChangeAsync(visible =>
