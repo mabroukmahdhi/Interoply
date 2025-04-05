@@ -2,6 +2,7 @@
 // Copyright (c) Mabrouk Mahdhi 2025. All rights reserved.
 // --------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using Interoply.Models.Events.Exceptions;
 using Xeptions;
@@ -22,6 +23,10 @@ namespace Interoply.Services.Events
             {
                 throw CreateInteroplyEventValidationException(nullInteroplyEventException);
             }
+            catch (Exception exception)
+            {
+                throw CreateInteroplyEventServiceException(exception);
+            }
         }
 
         private static InteroplyEventValidationException CreateInteroplyEventValidationException(
@@ -29,6 +34,14 @@ namespace Interoply.Services.Events
         {
             return new InteroplyEventValidationException(
                 message: "Interoply Callback event validation error occurred, fix the errors and try again.",
+                innerException);
+        }
+
+        private static InteroplyEventServiceException CreateInteroplyEventServiceException(
+            Exception innerException)
+        {
+            return new InteroplyEventServiceException(
+                message: "Interoply Callback event service error occurred, fix the errors and try again.",
                 innerException);
         }
     }

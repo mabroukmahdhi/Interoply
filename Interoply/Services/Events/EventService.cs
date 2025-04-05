@@ -29,18 +29,19 @@ namespace Interoply.Services.Events
         TryCatch(async () =>
         {
             ValidateInteroplyCallback(callback);
-
             var module = await moduleTask.Value;
             this.interoplyEvent.OnResizeCallback = callback;
             await module.InvokeVoidAsync("registerResize", dotNetRef);
         });
 
-        public async ValueTask OnScrollAsync(Func<double, ValueTask> callback)
+        public ValueTask OnScrollAsync(Func<double, ValueTask> callback) =>
+        TryCatch(async () =>
         {
+            ValidateInteroplyCallback(callback);
             var module = await moduleTask.Value;
             this.interoplyEvent.OnScrollCallback = callback;
             await module.InvokeVoidAsync("registerScroll", dotNetRef);
-        }
+        });
 
         [JSInvokable]
         public async Task RaiseResize(int width)

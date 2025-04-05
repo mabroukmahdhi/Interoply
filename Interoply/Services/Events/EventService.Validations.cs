@@ -10,7 +10,7 @@ namespace Interoply.Services.Events
 {
     internal partial class EventService
     {
-        private static void ValidateInteroplyCallback(Func<int, ValueTask> callback)
+        private static void ValidateInteroplyCallback<T>(Func<T, ValueTask> callback)
         {
             if (callback == null)
             {
