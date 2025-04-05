@@ -110,5 +110,29 @@ namespace Interoply.Tests.Unit.Services.Events
             receivedScrollY.Should().Be(expectedScrollY);
         }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task ShouldInvokeVisibilityChangeCallbackWhenTriggeredByInterop(bool inputScrollY)
+        {
+            // given
+            bool receivedVisibility = false; 
+            bool expectedScrollY = inputScrollY;
+
+            await this.eventService.OnVisibilityChangeAsync(visible =>
+            {
+                receivedVisibility = visible;
+                return ValueTask.CompletedTask;
+            });
+
+            // when
+            var raiseScrollMethod =
+                typeof(EventService).GetMethod("RaiseVisibilityChange")!;
+
+            raiseScrollMethod.Invoke(this.eventService, [inputScrollY]);
+
+            // then
+            receivedVisibility.Should().Be(expectedScrollY);
+        }
     }
 }
