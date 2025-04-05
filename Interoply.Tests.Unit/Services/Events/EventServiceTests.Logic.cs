@@ -46,6 +46,23 @@ namespace Interoply.Tests.Unit.Services.Events
         }
 
         [Fact]
+        public async Task ShouldInvokeRegisterScrollForOnVisibilityChangeAsync()
+        {
+            // given .. when
+            await this.eventService.OnVisibilityChangeAsync(scroll =>
+            {
+                return ValueTask.CompletedTask;
+            });
+
+            // then
+            var invocation = this.JSInterop.VerifyInvoke("visibilitychange");
+            invocation.Arguments.Should().HaveCount(1);
+
+            invocation.Arguments[0].Should()
+                .BeOfType<DotNetObjectReference<EventService>>();
+        }
+
+        [Fact]
         public async Task ShouldInvokeResizeCallbackWhenTriggeredByInterop()
         {
             // given
