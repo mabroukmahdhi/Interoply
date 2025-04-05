@@ -43,6 +43,24 @@ namespace Interoply.Services.Events
             await module.InvokeVoidAsync("registerScroll", dotNetRef);
         });
 
+        public ValueTask OnVisibilityChangeAsync(Func<bool, ValueTask> callback) =>
+        TryCatch(async () =>
+        {
+            ValidateInteroplyCallback(callback);
+            var module = await moduleTask.Value;
+            this.interoplyEvent.OnVisibilityChangeCallback = callback;
+            await module.InvokeVoidAsync("visibilitychange", dotNetRef);
+        });
+
+        public ValueTask OnOnlineStatusChangeAsync(Func<bool, ValueTask> callback) =>
+        TryCatch(async () =>
+        {
+            ValidateInteroplyCallback(callback);
+            var module = await moduleTask.Value;
+            this.interoplyEvent.OnOnlineStatusChangeCallback = callback;
+            await module.InvokeVoidAsync("registerOnlineStatus", dotNetRef);
+        });
+
         [JSInvokable]
         public async Task RaiseResize(int width)
         {
@@ -56,6 +74,21 @@ namespace Interoply.Services.Events
             if (this.interoplyEvent.OnScrollCallback != null)
                 await this.interoplyEvent.OnScrollCallback(scrollY);
         }
+
+        [JSInvokable]
+        public async Task RaiseVisibilityChange(bool isVisible)
+        {
+            if (this.interoplyEvent.OnVisibilityChangeCallback != null)
+                await this.interoplyEvent.OnVisibilityChangeCallback(isVisible);
+        }
+
+        [JSInvokable]
+        public async Task RaiseOnlineStatusChange(bool isOnline)
+        {
+            if (this.interoplyEvent.OnOnlineStatusChangeCallback != null)
+                await this.interoplyEvent.OnOnlineStatusChangeCallback(isOnline);
+        }
+
 
         public async ValueTask DisposeAsync()
         {
