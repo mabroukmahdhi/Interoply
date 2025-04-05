@@ -44,5 +44,30 @@ namespace Interoply.Tests.Unit.Services.Events
             invocation.Arguments[0].Should()
                 .BeOfType<DotNetObjectReference<EventService>>();
         }
+
+        [Fact]
+        public async Task ShouldInvokeResizeCallbackWhenTriggeredByInterop()
+        {
+            // given
+            int receivedWidth = 0;
+            int inputWidth = 1024;
+            int expectedWidth = 1024;
+
+            await this.eventService.OnResizeAsync(width =>
+            {
+                receivedWidth = width;
+                return ValueTask.CompletedTask;
+            });
+
+            // when
+            var raiseResizeMethod =
+                typeof(EventService).GetMethod("RaiseResize")!;
+
+            raiseResizeMethod.Invoke(this.eventService, [inputWidth]);
+
+            // then
+            receivedWidth.Should().Be(expectedWidth);
+        }
+
     }
 }
