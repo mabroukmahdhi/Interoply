@@ -12,6 +12,7 @@ namespace Interoply.Extensions
         public static IServiceCollection AddInteroply(this IServiceCollection services)
         {
             services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IInteroplyService, InteroplyService>();
             return services;
         }
     }
