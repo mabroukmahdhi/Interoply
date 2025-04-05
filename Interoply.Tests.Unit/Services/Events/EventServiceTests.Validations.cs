@@ -16,7 +16,7 @@ namespace Interoply.Tests.Unit.Services.Events
             Func<int, ValueTask> nullCallback = null;
 
             var nullInteroplyEventException = new NullInteroplyEventException(
-                message: "Interoply Callback event cannot be null");
+                message: "Interoply Callback event is null");
 
             var expectedInteroplyEventValidationException
                 = new InteroplyEventValidationException(
@@ -26,12 +26,12 @@ namespace Interoply.Tests.Unit.Services.Events
             // when
             ValueTask onResizeTask = this.eventService.OnResizeAsync(nullCallback);
 
-            InteroplyEventValidationException actualParentProductValidationException =
+            InteroplyEventValidationException actualInteroplyEventValidationException =
                 await Assert.ThrowsAsync<InteroplyEventValidationException>(
                     onResizeTask.AsTask);
 
             // then
-            actualParentProductValidationException.Should().BeEquivalentTo(
+            actualInteroplyEventValidationException.Should().BeEquivalentTo(
                 expectedInteroplyEventValidationException);
         }
     }

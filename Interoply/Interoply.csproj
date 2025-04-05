@@ -26,4 +26,8 @@
 	<ItemGroup>
 		<InternalsVisibleTo Include="Interoply.Tests.Unit" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Xeption" Version="2.8.0" />
+	</ItemGroup>
 </Project>

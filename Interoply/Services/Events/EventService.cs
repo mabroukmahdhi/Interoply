@@ -9,7 +9,7 @@ using Microsoft.JSInterop;
 
 namespace Interoply.Services.Events
 {
-    internal class EventService : IEventService, IAsyncDisposable
+    internal partial class EventService : IEventService, IAsyncDisposable
     {
         private readonly DotNetObjectReference<EventService> dotNetRef;
         private readonly InteroplyEvent interoplyEvent;
@@ -25,12 +25,15 @@ namespace Interoply.Services.Events
             this.dotNetRef = DotNetObjectReference.Create(this);
         }
 
-        public async ValueTask OnResizeAsync(Func<int, ValueTask> callback)
+        public ValueTask OnResizeAsync(Func<int, ValueTask> callback) =>
+        TryCatch(async () =>
         {
+            ValidateInteroplyCallback(callback);
+
             var module = await moduleTask.Value;
             this.interoplyEvent.OnResizeCallback = callback;
             await module.InvokeVoidAsync("registerResize", dotNetRef);
-        }
+        });
 
         public async ValueTask OnScrollAsync(Func<double, ValueTask> callback)
         {
