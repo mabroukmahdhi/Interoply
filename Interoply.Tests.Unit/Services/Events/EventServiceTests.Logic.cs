@@ -27,5 +27,22 @@ namespace Interoply.Tests.Unit.Services.Events
             invocation.Arguments[0].Should()
                 .BeOfType<DotNetObjectReference<EventService>>();
         }
+
+        [Fact]
+        public async Task ShouldInvokeRegisterScrollForOnScrollAsync()
+        {
+            // given .. when
+            await this.eventService.OnScrollAsync(scroll =>
+            {
+                return ValueTask.CompletedTask;
+            });
+
+            // then
+            var invocation = this.JSInterop.VerifyInvoke("registerScroll");
+            invocation.Arguments.Should().HaveCount(1);
+
+            invocation.Arguments[0].Should()
+                .BeOfType<DotNetObjectReference<EventService>>();
+        }
     }
 }
