@@ -8,10 +8,9 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Version>1.0.1</Version>
-		<AssemblyVersion>1.0.1</AssemblyVersion>
-		<FileVersion>1.0.1</FileVersion>
-		<InformationalVersion>1.0.1</InformationalVersion>
+		<Version>0.1.0</Version>
+		<AssemblyVersion>0.1.0</AssemblyVersion>
+		<FileVersion>0.1.0</FileVersion> 
 		<Title>Interoply</Title>
 		<Authors>Mabrouk Mahdhi</Authors>
 		<Description>Interoply is a lightweight Blazor library that simplifies JavaScript interop and event handling. Easily register for browser events like resize, scroll, and more — with a clean, fluent C# API and minimal JS.</Description>
@@ -23,6 +22,7 @@
 		<PackageTags>Blazor .NET WebAssembly Interop JSRuntime JS Events</PackageTags>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -3,6 +3,11 @@
 **Interoply** is a lightweight, extensible library that makes JavaScript interop in Blazor **simple, intuitive, and plug-and-play**.  
 It handles browser events like resize, scroll, visibility, and even custom DOM events — so you don't have to write any JavaScript.
 
+[![Nuget](https://img.shields.io/nuget/v/Interoply)](https://www.nuget.org/packages/Interoply/)
+[![Nuget](https://img.shields.io/nuget/dt/Interoply)](https://www.nuget.org/packages/Interoply/)
+![.NET 7](https://img.shields.io/badge/.NET_7-COMPATIBLE-2ea44f)
+![.NET 8](https://img.shields.io/badge/.NET_8-COMPATIBLE-2ea44f)
+![.NET 9](https://img.shields.io/badge/.NET_9-COMPATIBLE-2ea44f)
 ---
 
 ## ✨ Features
