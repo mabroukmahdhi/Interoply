@@ -4,11 +4,26 @@
 		<TargetFrameworks>net7.0;net8.0;net9.0</TargetFrameworks>
 		<Nullable>disable</Nullable>
 		<ImplicitUsings>disable</ImplicitUsings>
-		<NoWarn>CS1998</NoWarn>
-		<Version>0.1.0</Version>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<NoWarn>CS1998</NoWarn> 
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<Version>1.0.1</Version>
+		<AssemblyVersion>1.0.1</AssemblyVersion>
+		<FileVersion>1.0.1</FileVersion>
+		<InformationalVersion>1.0.1</InformationalVersion>
+		<Title>Interoply</Title>
+		<Authors>Mabrouk Mahdhi</Authors>
+		<Description>Interoply is a lightweight Blazor library that simplifies JavaScript interop and event handling. Easily register for browser events like resize, scroll, and more — with a clean, fluent C# API and minimal JS.</Description>
+		<Copyright>Copyright (c) 2025 Mabrouk Mahdhi</Copyright>
+		<PackageProjectUrl>https://github.com/mabroukmahdhi/Interoply</PackageProjectUrl>
+		<PackageIcon>interoply.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/mabroukmahdhi/Interoply</RepositoryUrl>
+		<PackageTags>Blazor .NET WebAssembly Interop JSRuntime JS Events</PackageTags>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<SupportedPlatform Include="browser" />
@@ -29,9 +44,26 @@
 	<ItemGroup>
 		<InternalsVisibleTo Include="Interoply.Tests.Unit" />
 		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
-	</ItemGroup>
+	</ItemGroup> 
 
 	<ItemGroup>
 	  <PackageReference Include="Xeption" Version="2.8.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+
+		<None Include="..\interoply.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+
+		<None Include="..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 </Project>
