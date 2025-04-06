@@ -1,0 +1,34 @@
+﻿@page "/"
+@using Interoply.Tests.Manual.Services
+@using Interoply.Tests.Manual.Services.Toasts
+
+@inject IInteroplyService Interoply
+@inject IToastService Example
+
+<p>Window width: @width px</p>
+<button @onclick=Clicked>Click here</button>
+
+@code {
+    private int width;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Interoply.RegisterOnResizeListnerAsync(UpdateWidth);
+        }
+    }
+
+    ValueTask UpdateWidth(int w)
+    {
+        width = w;
+        StateHasChanged();
+        return ValueTask.CompletedTask;
+    }
+
+    async void Clicked()
+    {
+        await Example.ShowToastAsync("Hello from Blazor!");
+    }
+}
+

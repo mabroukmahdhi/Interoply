@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interoply", "Interoply\Inte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interoply.Tests.Unit", "Interoply.Tests.Unit\Interoply.Tests.Unit.csproj", "{1362E4DB-214A-4113-8B6E-272C55B267C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interoply.Tests.Manual", "Interoply.Tests.Manual\Interoply.Tests.Manual.csproj", "{C1CB0838-C500-44EE-994A-32736483BCFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1362E4DB-214A-4113-8B6E-272C55B267C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1362E4DB-214A-4113-8B6E-272C55B267C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1362E4DB-214A-4113-8B6E-272C55B267C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1CB0838-C500-44EE-994A-32736483BCFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1CB0838-C500-44EE-994A-32736483BCFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1CB0838-C500-44EE-994A-32736483BCFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1CB0838-C500-44EE-994A-32736483BCFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
