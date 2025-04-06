@@ -5,60 +5,55 @@
 using System;
 using System.Threading.Tasks;
 using Interoply.Models.Events;
+using Interoply.Services.Bases;
 using Microsoft.JSInterop;
 
 namespace Interoply.Services.Events
 {
-    internal partial class EventService : IEventService, IAsyncDisposable
+    internal partial class EventService : InteroplyServiceBase, IEventService
     {
-        private readonly DotNetObjectReference<EventService> dotNetRef;
         private readonly InteroplyEvent interoplyEvent;
-        private readonly Lazy<Task<IJSObjectReference>> moduleTask;
+        private readonly DotNetObjectReference<InteroplyServiceBase> dotNetRef;
+
+        protected override string JsModulePath =>
+            "./_content/Interoply/interoplyEvents.js";
 
         public EventService(IJSRuntime jsRuntime)
+            : base(jsRuntime)
         {
             this.interoplyEvent = new InteroplyEvent();
-
-            this.moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", "./_content/Interoply/interoplyEvents.js").AsTask());
-
-            this.dotNetRef = DotNetObjectReference.Create(this);
         }
 
         public ValueTask OnResizeAsync(Func<int, ValueTask> callback) =>
         TryCatch(async () =>
         {
             ValidateInteroplyCallback(callback);
-            var module = await moduleTask.Value;
             this.interoplyEvent.OnResizeCallback = callback;
-            await module.InvokeVoidAsync("registerResize", dotNetRef);
+            await InvokeVoidAsync("registerResize", dotNetRef);
         });
 
         public ValueTask OnScrollAsync(Func<double, ValueTask> callback) =>
         TryCatch(async () =>
         {
             ValidateInteroplyCallback(callback);
-            var module = await moduleTask.Value;
             this.interoplyEvent.OnScrollCallback = callback;
-            await module.InvokeVoidAsync("registerScroll", dotNetRef);
+            await InvokeVoidAsync("registerScroll", dotNetRef);
         });
 
         public ValueTask OnVisibilityChangeAsync(Func<bool, ValueTask> callback) =>
         TryCatch(async () =>
         {
             ValidateInteroplyCallback(callback);
-            var module = await moduleTask.Value;
             this.interoplyEvent.OnVisibilityChangeCallback = callback;
-            await module.InvokeVoidAsync("visibilitychange", dotNetRef);
+            await InvokeVoidAsync("visibilitychange", dotNetRef);
         });
 
         public ValueTask OnOnlineStatusChangeAsync(Func<bool, ValueTask> callback) =>
         TryCatch(async () =>
         {
             ValidateInteroplyCallback(callback);
-            var module = await moduleTask.Value;
             this.interoplyEvent.OnOnlineStatusChangeCallback = callback;
-            await module.InvokeVoidAsync("registerOnlineStatus", dotNetRef);
+            await InvokeVoidAsync("registerOnlineStatus", dotNetRef);
         });
 
         [JSInvokable]
@@ -90,22 +85,9 @@ namespace Interoply.Services.Events
         }
 
 
-        public async ValueTask DisposeAsync()
+        public override async ValueTask DisposeAsync()
         {
-            if (this.moduleTask.IsValueCreated)
-            {
-                try
-                {
-                    var module = await moduleTask.Value;
-
-                    if (module != null)
-                        await module.InvokeVoidAsync("cleanup");
-                }
-                catch (JSException)
-                {
-                    // JS not ready
-                }
-            }
+            await base.DisposeAsync();
 
             dotNetRef?.Dispose();
         }
