@@ -9,7 +9,7 @@ using Microsoft.JSInterop;
 
 namespace Interoply.Services.Bases
 {
-    public abstract class InteroplyServiceBase : IInteroplyServiceBase, IAsyncDisposable
+    public abstract class InteroplyServiceBase : IAsyncDisposable
     {
         protected readonly Lazy<Task<IJSObjectReference>> moduleTask;
         protected abstract string JsModulePath { get; }
@@ -63,21 +63,6 @@ namespace Interoply.Services.Bases
         }
 
         public virtual async ValueTask DisposeAsync()
-        {
-            if (this.moduleTask.IsValueCreated)
-            {
-                try
-                {
-                    var module = await moduleTask.Value;
-
-                    if (module != null)
-                        await module.InvokeVoidAsync("cleanup");
-                }
-                catch (JSException)
-                {
-                    // JS not ready
-                }
-            }
-        }
+        { }
     }
 }

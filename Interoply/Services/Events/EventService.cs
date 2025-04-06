@@ -13,7 +13,7 @@ namespace Interoply.Services.Events
     internal partial class EventService : InteroplyServiceBase, IEventService
     {
         private readonly InteroplyEvent interoplyEvent;
-        private readonly DotNetObjectReference<InteroplyServiceBase> dotNetRef;
+        private readonly DotNetObjectReference<EventService> dotNetRef;
 
         protected override string JsModulePath =>
             "./_content/Interoply/interoplyEvents.js";
@@ -22,6 +22,7 @@ namespace Interoply.Services.Events
             : base(jsRuntime)
         {
             this.interoplyEvent = new InteroplyEvent();
+            this.dotNetRef = DotNetObjectReference.Create(this);
         }
 
         public ValueTask OnResizeAsync(Func<int, ValueTask> callback) =>
@@ -84,11 +85,8 @@ namespace Interoply.Services.Events
                 await this.interoplyEvent.OnOnlineStatusChangeCallback(isOnline);
         }
 
-
         public override async ValueTask DisposeAsync()
         {
-            await base.DisposeAsync();
-
             dotNetRef?.Dispose();
         }
     }
